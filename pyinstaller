@@ -1,0 +1,2 @@
+cd /d D:\#Work\New
+pyinstaller --onefile  --noconsole "createProjectName.py"
