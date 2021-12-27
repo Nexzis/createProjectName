@@ -4,6 +4,8 @@ from tkinter import ttk
 import datetime
 import subprocess
 import pickle
+from tkinter import messagebox # Удалить если не понадобится
+import easygui
 
 
 now = datetime.datetime.now()
@@ -33,14 +35,16 @@ data_old = {
                     "ZPLR_ASU_TP_ESN",
                     "ZPLR_PRU",
                     "ZPLR_SAU_BPG",
-                    "SOSN",],
+                    "SOSN",
+                    "Add new project"],
     "versions": [   "10021",
                     "10223",
                     "7861",
                     "10255",
                     "10277",
                     "10301",
-                    "10335"],
+                    "10335",
+                    "Add new version"],
     "current_settings" : ["test",0,0]
 }
 
@@ -76,11 +80,39 @@ def prepare_data():
     with open("config.pickle", "wb") as f:
         pickle.dump(data, f) 
 
+def add_new_project(event):
+    res.delete(0, END)
+    if combo_project.get() == 'Add new project':
+        new_project = easygui.enterbox("Add new project")
+    else:
+        pass
+    res.insert(0,  ("new project is " + new_project))
+    data["projects"].append(new_project)
+    data["projects"].sort(key='Add new project'.__eq__)
+    combo_project.configure(values = data["projects"])
+    return new_project
+
+def add_new_version(event):
+    res.delete(0, END)
+    if combo_sonata.get() == 'Add new version':
+        new_version = easygui.enterbox("Add new version")
+    else:
+        pass
+    res.insert(0,  ("new version is " + new_version))
+    data["versions"].append(new_version)
+    data["versions"].sort()
+    data["versions"].sort(key='Add new version'.__eq__)
+    combo_sonata.configure(values = data["versions"])
+    return new_version
+
 
 data = open_data() 
 combo_project.configure(values = data["projects"])
 combo_sonata.configure(values = data["versions"])
 convert_data(data["current_settings"][0],data["current_settings"][1],data["current_settings"][2])
+combo_project.bind("<<ComboboxSelected>>", add_new_project)
+combo_sonata.bind("<<ComboboxSelected>>", add_new_version)
+
 
 user_lbl.place(x=10, y=10)
 project_lbl.place(x=75, y=10)
