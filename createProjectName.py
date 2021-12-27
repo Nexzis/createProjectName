@@ -86,11 +86,14 @@ def add_new_project(event):
         new_project = easygui.enterbox("Add new project")
     else:
         pass
-    res.insert(0,  ("new project is " + new_project))
-    data["projects"].append(new_project)
-    data["projects"].sort(key='Add new project'.__eq__)
+    try: 
+        res.insert(0,  ("new project is " + new_project))
+        data["projects"].append(new_project)
+        data["projects"].sort(key='Add new project'.__eq__)
+    except UnboundLocalError:
+        pass        
     combo_project.configure(values = data["projects"])
-    return new_project
+    #return new_project
 
 def add_new_version(event):
     res.delete(0, END)
@@ -98,12 +101,15 @@ def add_new_version(event):
         new_version = easygui.enterbox("Add new version")
     else:
         pass
-    res.insert(0,  ("new version is " + new_version))
-    data["versions"].append(new_version)
-    data["versions"].sort()
-    data["versions"].sort(key='Add new version'.__eq__)
+    try:
+        res.insert(0,  ("new version is " + new_version))
+        data["versions"].append(new_version)
+        data["versions"].sort()
+        data["versions"].sort(key='Add new version'.__eq__)
+    except UnboundLocalError:
+        pass
     combo_sonata.configure(values = data["versions"])
-    return new_version
+    #return new_version
 
 
 data = open_data() 
