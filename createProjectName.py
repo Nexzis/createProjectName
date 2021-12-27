@@ -4,7 +4,6 @@ from tkinter import ttk
 import datetime
 import subprocess
 import pickle
-from tkinter import messagebox # Удалить если не понадобится
 import easygui
 
 
@@ -33,8 +32,6 @@ data_old = {
                     "NOVOUB_ASUE",
                     "NOVOURD_ASUE",
                     "ZPLR_ASU_TP_ESN",
-                    "ZPLR_PRU",
-                    "ZPLR_SAU_BPG",
                     "SOSN",
                     "Add new project"],
     "versions": [   "10021",
@@ -80,6 +77,7 @@ def prepare_data():
     with open("config.pickle", "wb") as f:
         pickle.dump(data, f) 
 
+
 def add_new_project(event):
     res.delete(0, END)
     if combo_project.get() == 'Add new project':
@@ -93,7 +91,7 @@ def add_new_project(event):
     except UnboundLocalError:
         pass        
     combo_project.configure(values = data["projects"])
-    #return new_project
+
 
 def add_new_version(event):
     res.delete(0, END)
@@ -109,7 +107,6 @@ def add_new_version(event):
     except UnboundLocalError:
         pass
     combo_sonata.configure(values = data["versions"])
-    #return new_version
 
 
 data = open_data() 
