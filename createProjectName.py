@@ -40,14 +40,17 @@ def load_list(filename,user,box1,box2):
             
 def add_item(box, entry, sort):
     if entry.get() != "":
-        box.insert(END, entry.get())
-        entry.delete(0, END)
-        if sort:
-            items = [box.get(idx) for idx in range(box.size())]
-            items.sort()
-            box.delete(0, END)
-            for item in items:
-                box.insert(END, item)
+        if entry.get() not in box.get(0, END):
+            box.insert(END, entry.get())
+            entry.delete(0, END)
+            if sort:
+                items = [box.get(idx) for idx in range(box.size())]
+                items.sort()
+                box.delete(0, END)
+                for item in items:
+                    box.insert(END, item)
+        else:
+            entry.delete(0, END)
                 
 def del_list(box):
     select = list(box.curselection())
