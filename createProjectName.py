@@ -38,11 +38,17 @@ def load_list(filename,user,box1,box2):
         for item in items2:
             box2.insert(END, item)
             
-def add_item(box, entry):
+def add_item(box, entry, sort):
     if entry.get() != "":
         box.insert(END, entry.get())
         entry.delete(0, END)
-
+        if sort:
+            items = [box.get(idx) for idx in range(box.size())]
+            items.sort()
+            box.delete(0, END)
+            for item in items:
+                box.insert(END, item)
+                
 def del_list(box):
     select = list(box.curselection())
     select.reverse()
@@ -111,7 +117,7 @@ box1.config(yscrollcommand=scroll1.set)
 
 entry1 = Entry(frame_prj,width="12")
 entry1.pack()
-Button(frame_prj, text="Add", command=lambda: add_item(box1, entry1),width="9")\
+Button(frame_prj, text="Add", command=lambda: add_item(box1, entry1, 'false'),width="9")\
     .pack()
 Button(frame_prj, text="Delete", command=lambda: del_list(box1),width="9")\
     .pack()
@@ -128,7 +134,7 @@ box2.config(yscrollcommand=scroll2.set)
 
 entry2 = Entry(frame_ver,width="12")
 entry2.pack()
-Button(frame_ver, text="Add", command=lambda: add_item(box2, entry2),width="9")\
+Button(frame_ver, text="Add", command=lambda: add_item(box2, entry2, 'true'),width="9")\
     .pack()
 Button(frame_ver, text="Delete", command=lambda: del_list(box2),width="9")\
     .pack()
